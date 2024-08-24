@@ -1,33 +1,27 @@
+// User class to store user data
 public class User {
     private String id;
     private String login;
-    private String name;
+    private String profileUrl;
+    private int repos;
     private int followers;
     private int following;
-    private String company;
 
-    // Constructor
-    public User(String id, String login, String name, int followers, int following, String company) {
+    public User(String id, String login, String profileUrl, int repos, int followers, int following) {
         this.id = id;
         this.login = login;
-        this.name = name;
+        this.profileUrl = profileUrl;
+        this.repos = repos;
         this.followers = followers;
         this.following = following;
-        this.company = company;
     }
-
-    // Getters
-    public String getId() { return id; }
-    public String getLogin() { return login; }
-    public String getName() { return name; }
-    public int getFollowers() { return followers; }
-    public int getFollowing() { return following; }
-    public String getCompany() { return company; }
 
     @Override
     public String toString() {
-        return "ID: " + id + "\nLogin: " + login + "\nName: " + name +
-               "\nFollowers: " + followers + "\nFollowing: " + following +
-               "\nCompany: " + (company != null ? company : "N/A");
+        return "Login Name: " + login + "\n" +
+               "Profile URL: " + profileUrl + "\n" +
+               "Number of Repositories: " + repos + "\n" +
+               "Number of Followers: " + followers + "\n" +
+               "Number of Following: " + following;
     }
 }
