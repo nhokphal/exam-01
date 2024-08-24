@@ -29,15 +29,15 @@ public class GitHubUser {
                     .header("Accept", "application/json")
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            if (response.statusCode() == 200) {
+            int reponseSucess = response.statusCode();  
+            if (reponseSucess == 200) {
                 System.out.println("Fetched user data successfully!");
 
                 // Manually parse the JSON response (simple string manipulation)
                 String responseBody = response.body();
                 String[] usersArray = responseBody.split("\\},\\{");
 
-                // Fetch details for the first 20 users
+                // fetch details for the first 20 users
                 for (int i = 0; i < NUMBER_OF_USERS && i < usersArray.length; i++) {
                     String userJson = usersArray[i];
                     String id = extractValue(userJson, "\"id\":");
@@ -49,7 +49,7 @@ public class GitHubUser {
                     login = cleanValue(login);
                     detailsUrl = cleanValue(detailsUrl);
 
-                    // Fetch detailed user data
+                    // detailed user data
                     fetchUserDetails(id, login, detailsUrl);
                 }
             } else {
@@ -107,7 +107,6 @@ public class GitHubUser {
         System.out.print("Please enter a User ID to see details: ");
         String inputId = scanner.nextLine().trim();
 
-        // Display details or handle invalid input
         User user = usersMap.get(inputId);
         if (user != null) {
             System.out.println("User Details:");
@@ -119,13 +118,12 @@ public class GitHubUser {
         scanner.close();
     }
 
-    // Helper method to extract the value
+    // extract the value
     private String extractValue(String json, String key) {
         int startIndex = json.indexOf(key) + key.length();
         int endIndex = json.indexOf(",", startIndex);
         if (endIndex == -1) {
             endIndex = json.indexOf("}", startIndex); 
-            // Handle the last value in the JSON object
         }
         return json.substring(startIndex, endIndex);
     }
