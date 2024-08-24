@@ -84,7 +84,6 @@ public class GitHubUser {
                 followers = cleanValue(followers);
                 following = cleanValue(following);
 
-                // Store the user data in memory
                 User user = new User(id, login, profileUrl, Integer.parseInt(repos), Integer.parseInt(followers), Integer.parseInt(following));
                 usersMap.put(id, user);
 
@@ -120,19 +119,47 @@ public class GitHubUser {
         scanner.close();
     }
 
-    // Helper method to extract the value from a key-value pair in a JSON-like string
+    // Helper method to extract the value
     private String extractValue(String json, String key) {
         int startIndex = json.indexOf(key) + key.length();
         int endIndex = json.indexOf(",", startIndex);
         if (endIndex == -1) {
-            endIndex = json.indexOf("}", startIndex); // Handle the last value in the JSON object
+            endIndex = json.indexOf("}", startIndex); 
+            // Handle the last value in the JSON object
         }
         return json.substring(startIndex, endIndex);
     }
 
-    // Helper method to clean up the extracted value (removing quotes and extra characters)
+    // Helper method to clean up the extracted value
     private String cleanValue(String value) {
         return value.replaceAll("[\"{}]", "").trim();
+    }
+}
+
+class User {
+    private String id;
+    private String login;
+    private String profileUrl;
+    private int repos;
+    private int followers;
+    private int following;
+
+    public User(String id, String login, String profileUrl, int repos, int followers, int following) {
+        this.id = id;
+        this.login = login;
+        this.profileUrl = profileUrl;
+        this.repos = repos;
+        this.followers = followers;
+        this.following = following;
+    }
+
+    @Override
+    public String toString() {
+        return "Login Name: " + login + "\n" +
+               "Profile URL: " + profileUrl + "\n" +
+               "Number of Repositories: " + repos + "\n" +
+               "Number of Followers: " + followers + "\n" +
+               "Number of Following: " + following;
     }
 }
 
